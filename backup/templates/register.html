@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        
+        .left, .right {
+            width: 50%;
+            height: 100%;
+        }
+
+        .left {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        
+        .left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffe4e1; /* Light rose background */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            width: 60%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ffccd5; /* Light rose border */
+            border-radius: 8px;
+            
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative; /* Relative positioning for icon */
+        }
+        
+        .form-group label {
+            display: none; /* Hide labels for email and password */
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding-left: 40px; /* Space for icon */
+            font-size: 16px; /* Increased font size */
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="password"] {
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 20px 20px; /* Reduce icon size */
+        }
+
+        .form-group input[type="text"] {
+            background-image: url('{% static "img/name.png" %}'); /* User icon for parent name */
+        }
+        
+        .form-group input[type="email"] {
+            background-image: url('{% static "img/email.png" %}'); /* Email icon */
+        }
+
+        .form-group input[type="tel"] {
+            background-image: url('{% static "img/phone.png" %}'); /* Phone icon */
+        }
+
+        .form-group input[type="password"] {
+            background-image: url('{% static "img/password.png" %}'); /* Password icon */
+        }
+
+        .form-group select {
+            background-image: url('{% static "img/role.png" %}'); /* Role icon */
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 20px 20px; /* Reduce icon size */
+            padding-left: 40px; /* Space for icon */
+            color:grey;
+        }
+        
+        .form-group textarea {
+            background-image: url('{% static "img/address.png" %}'); /* Address icon */
+            background-repeat: no-repeat;
+            background-position: 10px 10px;
+            background-size: 20px 20px; /* Reduce icon size */
+            height: 80px; /* Set a height for the textarea */
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 30px; /* Increased width */
+            height: 40px;
+            width: 200px;
+            color: #fff;
+            background-color: #f55b79;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 4px;
+            margin-top: 20px; /* Space above button */
+        }
+        
+        .btn-primary {
+            background-color: #f55b79;
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #d1465e; /* Darker color for hover */
+        }
+        
+        h2 {
+            color: #f55b79;
+            font-weight: bold;
+        }
+        
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <img src="{% static 'img/login.jpg' %}" alt="Register Image">
+    </div>
+    <div class="right">
+        <div class="form-container">
+            <center><h2>Create an Account Now !</h2></center>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="parent_name">Parent Name:</label>
+                    <input type="text" id="parent_name" name="parent_name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile:</label>
+                    <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role of User:</label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>Role of User</option>
+                        <option value="parent">Parent</option>
+                        <option value="healthcare_provider">Healthcare Provider</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" placeholder="Enter your address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <center><button type="submit" class="btn btn-primary">Register</button></center>
+            </form>
+            <div class="register-link">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

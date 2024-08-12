@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NurtureNest Settings</title>
+    <!-- Add your CSS link or styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+        }
+        .role-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .role {
+            text-align: center;
+        }
+        .role img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        .role h2 {
+            color: #f55b79;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="container">
+        <div class="role-container">
+            <div class="role">
+                <img src="{% static 'img/parent.webp' %}" alt="Parent Image">
+                <h2>Parent</h2>
+            </div>
+            <div class="role">
+                <img src="{% static 'img/health.jpg' %}" alt="Healthcare Provider">
+                <h2>Healthcare Provider</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

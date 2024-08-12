@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Css -->
+    <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/all.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <title>Admin | Requests</title>
+</head>
+
+<body>
+<!--Container -->
+<div class="mx-auto bg-grey-400">
+    <!--Screen-->
+    <div class="min-h-screen flex flex-col">
+        <!--Header Section Starts Here-->
+        <header class="bg-nav">
+            <div class="flex justify-between">
+                <div class="p-1 mx-3 inline-flex items-center">
+                    <i class="fas fa-bars pr-2 text-white" onclick="sidebarToggle()"></i>
+                    <h1 class="text-white p-2">NurtureNest</h1>
+                </div>
+                <div class="p-1 flex flex-row items-center">
+                    <img onclick="profileToggle()" class="inline-block h-8 w-8 rounded-full" src="{% static 'img/name.png' %}" alt="">
+                    <a href="#" onclick="profileToggle()" class="text-white p-2 no-underline hidden md:block">NurtureNest</a>
+                    <div id="ProfileDropDown" class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r">
+                        <ul class="list-reset">
+                          <li><a href="#" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--/Header-->
+
+        <div class="flex flex-1">
+            <!--Sidebar-->
+            <aside id="sidebar" class="bg-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md::block lg:block">
+
+                <ul class="list-reset flex flex-col">
+                    <li class="w-full h-full py-3 px-2 border-b border-light-border bg-nav">
+                        <a href="{% url 'admin_home' %}"
+                           class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-undderline">
+                            <i class="fas fa-tachometer-alt float-left mx-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Dashboard</span>
+                            <span><i class="fas fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                        <a href="{% url 'request' %}"
+                           class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-undderline">
+                           <i class="fas fa-user-check mr-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Login Requests</span>
+                            <span><i class="fa fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                        <a href="buttons.html"
+                           class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-undderline">
+                            <i class="fas fa-grip-horizontal float-left mx-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Buttons</span>
+                            <span><i class="fa fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                        <a href="tables.html"
+                           class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-undderline">
+                            <i class="fas fa-table float-left mx-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Tables</span>
+                            <span><i class="fa fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                        <a href="ui.html"
+                           class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-undderline">
+                            <i class="fab fa-uikit float-left mx-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Ui components</span>
+                            <span><i class="fa fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                    <li class="w-full h-full py-3 px-2 border-b border-300-border">
+                        <a href="modals.html" class="font-sans font-hairline hover:font-normal text-sm text-white p-2 no-underline">
+                            <i class="fas fa-square-full float-left mx-2"></i>
+                            <span style="font-weight: bold; font-size: 18px;">Modals</span>
+                            <span><i class="fa fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>
+                </ul>
+
+            </aside>
+            <!--/Sidebar-->
+
+            <!--Main-->
+            <main class="bg-white-500 flex-1 p-3 overflow-hidden">
+
+
+                    <!--Grid Form-->
+
+                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                        <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                            <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                                Full Table
+                            </div>
+                            <div class="p-3">
+                                <table class="table-responsive w-full rounded">
+                                    <thead>
+                                      <tr>
+                                        <th class="border w-1/4 px-4 py-2">HealthCenter Name</th>
+                                        <th class="border w-1/6 px-4 py-2">Phone No</th>
+                                        <th class="border w-1/6 px-4 py-2">Address</th>
+                                        <th class="border w-1/6 px-4 py-2">City</th>
+                                        <th class="border w-1/5 px-4 py-2">Actions</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="border px-4 py-2">Micheal Clarke</td>
+                                            <td class="border px-4 py-2">Sydney</td>
+                                            <td class="border px-4 py-2">MS</td>
+                                            <td class="border px-4 py-2">900 $</td>
+                                            <td class="border px-4 py-2">
+                                                <i class="fas fa-check text-green-500 mx-2"></i>
+                                            </td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Grid Form-->
+                </div>
+            </main>
+            <!--/Main-->
+        </div>
+        <!--Footer-->
+        <footer class="bg-grey-darkest text-white p-2">
+            <div class="flex flex-1 mx-auto"><br><br></div>
+        </footer>
+        <!--/footer-->
+
+    </div>
+
+</div>
+
+<script src="./main.js"></script>
+
+</body>
+
+</html>
