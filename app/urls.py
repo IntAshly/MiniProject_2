@@ -62,7 +62,7 @@ urlpatterns = [
     path('healthprofile/', views.health_profile_view, name='view_healthprofile'),
     path('edit-health-profile/', views.edit_health_profile_view, name='edit_health_profile'),
     path('chart/', views.chart_view, name='chart'), 
-    path('upload_image/', views.upload_image, name='upload_image'),
+    # path('upload_image/', views.upload_image, name='upload_image'),
 
     path('add_feedingchart/', views.add_feedingchart, name='add_feedingchart'),
     path('feedingcharts/', views.feedingchart_lists, name='feedingchart_lists'),

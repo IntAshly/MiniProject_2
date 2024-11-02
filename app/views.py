@@ -1370,36 +1370,36 @@ def clear_notifications(sender, request, user, **kwargs):
 
 
 # View for image upload and vaccine prediction
-def upload_image(request):
-    if request.method == 'POST':
-        # Get the uploaded image
-        image = request.FILES['vaccine_image']
-        image_path = os.path.join(settings.MEDIA_ROOT, 'vaccine_images', image.name)  # Save in 'vaccine_images' folder
+# def upload_image(request):
+#     if request.method == 'POST':
+#         # Get the uploaded image
+#         image = request.FILES['vaccine_image']
+#         image_path = os.path.join(settings.MEDIA_ROOT, 'vaccine_images', image.name)  # Save in 'vaccine_images' folder
         
-        # Ensure the 'vaccine_images' directory exists
-        os.makedirs(os.path.dirname(image_path), exist_ok=True)
+#         # Ensure the 'vaccine_images' directory exists
+#         os.makedirs(os.path.dirname(image_path), exist_ok=True)
         
-        # Save the image to the media folder
-        with open(image_path, 'wb+') as destination:
-            for chunk in image.chunks():
-                destination.write(chunk)
+#         # Save the image to the media folder
+#         with open(image_path, 'wb+') as destination:
+#             for chunk in image.chunks():
+#                 destination.write(chunk)
         
-        # Construct the URL to access the image (relative to MEDIA_URL)
-        image_url = os.path.join(settings.MEDIA_URL, 'vaccine_images', image.name)
+#         # Construct the URL to access the image (relative to MEDIA_URL)
+#         image_url = os.path.join(settings.MEDIA_URL, 'vaccine_images', image.name)
         
-        # Call the ML model to predict vaccine details
-        vaccine_details = predict_vaccine_details(image_path)
+#         # Call the ML model to predict vaccine details
+#         vaccine_details = predict_vaccine_details(image_path)
         
-        # Return the predicted details in JSON format including the image URL
-        return JsonResponse({
-            'vaccine_name': vaccine_details['name'],
-            'age_group': vaccine_details['age_group'],
-            'purpose': vaccine_details['purpose'],
-            'disadvantages': vaccine_details['disadvantages'],
-            'image_url': image_url  # Pass the image URL for display
-        })
+#         # Return the predicted details in JSON format including the image URL
+#         return JsonResponse({
+#             'vaccine_name': vaccine_details['name'],
+#             'age_group': vaccine_details['age_group'],
+#             'purpose': vaccine_details['purpose'],
+#             'disadvantages': vaccine_details['disadvantages'],
+#             'image_url': image_url  # Pass the image URL for display
+#         })
     
-    return render(request, 'upload_image.html')
+#     return render(request, 'upload_image.html')
 
 def delete_healthcenter(request, healthcare_provider_id):
     if request.method == 'POST':
