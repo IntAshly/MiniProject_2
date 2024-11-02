@@ -1,0 +1,502 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    <!-- Css -->
+    <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/all.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <title>Dashboard | Admin</title>
+    <style>
+        .bg-nav {
+            background-color: #4B5563; /* Dark gray for nav background */
+        }
+
+        body {
+            background-color: #f0f4f8; /* Light gray background */
+        }
+
+        .no-underline {
+            text-decoration: none;
+        }
+
+        .text-black {
+            color: black;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            color: #F3F4F6; /* Light gray text */
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .sidebar-link:hover {
+            background-color: #1F2937; /* Darker gray on hover */
+        }
+
+        .main-content {
+            padding: 2rem;
+            background-color: #f5f5f5; /* White main content area */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            border-radius: 8px; /* Rounded corners */
+        }
+
+        .footer {
+            background-color: #374151; /* Darker gray footer */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .icon-style {
+            font-size: 2rem; /* Larger icons */
+        }
+
+        .box-title {
+            margin-top: 1rem;
+            font-size: 1.25rem; /* Larger text */
+        }
+
+        .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .box-container > div {
+            flex: 1 1 calc(33.333% - 20px); /* Three boxes per row with space between */
+            margin-bottom: 20px; /* Space between rows */
+        }
+
+        @media (max-width: 768px) {
+            .box-container > div {
+                flex: 1 1 calc(100% - 20px); /* Single box per row on smaller screens */
+            }
+        }
+            
+        .profile-container {
+            position: relative; /* Positioning for dropdown */
+            display: flex; /* Align items horizontally */
+            align-items: center; /* Center vertically */
+        }
+        
+        .profile-dropdown {
+            background-color: #4B5563; /* Dark gray background */
+            color: white; /* White text */
+            padding: 10px; /* Padding */
+            text-align: left; /* Align text left */
+            width: 200px; /* Set width */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-radius: 8px; /* Rounded corners */
+            position: absolute; /* Position dropdown absolutely */
+            top: 100%; /* Position below the container */
+            right: 0; /* Align to the right of the container */
+            margin-top: 8px; /* Space between text and dropdown */
+            display: none; /* Initially hidden */
+            z-index: 10; /* Ensure dropdown is above other content */
+        }
+        
+        .profile-dropdown a {
+            color: white; /* White text */
+            padding: 10px;
+            display: block;
+            text-decoration: none; /* No underline */
+        }
+        
+        .profile-dropdown a:hover {
+            background-color: #1F2937; /* Darker gray on hover */
+        }
+        
+        .show {
+            display: block; /* Display when shown */
+        }
+        .error {
+            color: red;
+            font-size: 0.875rem;
+        }
+        
+        .text-success {
+            color: green;
+            font-size: 0.875rem;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!--Container -->
+    <div class="mx-auto bg-grey-400">
+        <!--Screen-->
+        <div class="min-h-screen flex flex-col">
+            <!--Header Section Starts Here-->
+            <header class="bg-nav p-4">
+                <div class="flex justify-between">
+                    <div class="inline-flex items-center">
+                        <i class="fas fa-bars pr-4 text-white" onclick="sidebarToggle()"></i>
+                        <h1 class="text-white text-2xl">NurtureNest</h1>
+                    </div>
+                    <div class="flex items-center profile-container">
+                        <img onclick="profileToggle()" class="h-10 w-10 rounded-full" src="{% static 'img/name.png' %}" alt="Profile">
+                        <a href="#" onclick="profileToggle()" class="text-white ml-4 hidden md:block lg:block">NurtureNest</a>
+                        <div id="ProfileDropDown" class="profile-dropdown hidden shadow-md absolute mt-12 mr-4 right-0">
+                            <a href="#">My Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!--/Header-->
+
+            <div class="flex flex-1">
+                <!--Sidebar-->
+                <aside id="sidebar" class="bg-nav w-1/5 md:w-1/6 lg:w-1/6 border-r border-gray-700 hidden md:block lg:block">
+                    <ul class="list-reset">
+                        <li class="sidebar-link">
+                            <i class="fas fa-tachometer-alt mx-2"></i>
+                            <a href="{% url 'admin_home' %}" class="no-underline">Dashboard</a>
+                        </li>
+                        <li class="sidebar-link">
+                            <i class="fas fa-user-check mx-2"></i>
+                            <a href="{% url 'request' %}" class="no-underline">Login Requests</a>
+                        </li>
+                        <li class="sidebar-link">
+                            <i class="fas fa-syringe mx-2"></i>
+                            <a href="{% url 'add_vaccine' %}" class="no-underline">Add Vaccines</a>
+                        </li>
+                        <li class="sidebar-link">
+                            <i class="fas fa-grip-horizontal mx-2"></i>
+                            <a href="{% url 'total_healthcenters' %}" class="no-underline">Total HeathCenters</a>
+                        </li>
+                        <li class="sidebar-link">
+                            <i class="fas fa-users mx-2"></i>
+                            <a href="{% url 'total_parents' %}" class="no-underline">Total Parents</a>
+                        </li>
+
+                        <li class="sidebar-link">
+                            <i class="fas fa-square-full mx-2"></i>
+                            <a href="{% url 'view_vaccines' %}" class="no-underline">View Vaccines</a>
+                        </li>
+                    </ul>
+                </aside>
+                <!--/Sidebar-->
+    <!-- edit_vaccine.html -->
+<main class="flex-1 p-6">
+    <div class="main-content">
+        <div class="box-container">
+            <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                    <div style="background-color: #e69b95;" class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                        <b>Edit Vaccine Details</b>
+                    </div>
+                    
+                    {# Update the form action #}
+                    <form class="w-full" method="post" action="{% url 'edit_vaccine' vaccine.id %}">
+                    
+                    {# Pre-fill the form fields with existing values #}
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="vaccine_name" name="vaccine_name" type="text" placeholder="Vaccine Name" value="{{ vaccine.vaccine_name }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="m_name" name="manufacturer" type="text" placeholder="Manufacturer" value="{{ vaccine.manufacturer }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="b_no" name="batch_number" type="text" placeholder="Batch Number" value="{{ vaccine.batch_number }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="date_mnf" name="date_manufacture" type="date" value="{{ vaccine.date_manufacture|date:'Y-m-d' }}" required>
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="exp_date" name="expiry_date" type="date" value="{{ vaccine.expiry_date|date:'Y-m-d' }}" required>
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="age" name="age_group" type="text" placeholder="Recommended Age Group" value="{{ vaccine.age_group }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="dose" name="dose_number" type="number" placeholder="Dose Number" value="{{ dose.dose_number }}" required min="0" max="5">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="interval_days" name="interval_days" type="text" placeholder="Days Between Doses" value="{{ dose.interval_days }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="indications" name="indications" type="text" placeholder="Indications" value="{{ vaccine.indications }}">
+                    
+                    <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                        id="stock" name="stock" type="number" placeholder="Available Stock" value="{{ vaccine.stock }}" required min="0" max="100">
+                    
+                    <select id="free-paid" name="free_or_paid" onchange="toggleRateField()" class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600">
+                        <option value="free" {% if vaccine.free_or_paid == 'free' %}selected{% endif %}>Free</option>
+                        <option value="paid" {% if vaccine.free_or_paid == 'paid' %}selected{% endif %}>Paid</option>
+                    </select>
+                    
+                    <div id="rate-field" {% if vaccine.free_or_paid != 'paid' %}style="display:none;"{% endif %}>
+                        <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                            id="rate" name="rate" type="number" placeholder="Rate" value="{{ vaccine.rate }}">
+                    </div>
+                    
+                    {# Change the submit button text #}
+                    <button style="background-color: #e69b95;" type="submit" class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600">
+                        Update Vaccine
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+  </div>
+    </div>
+</div>
+<script>
+    function sidebarToggle() {
+        document.getElementById('sidebar').classList.toggle('hidden');
+    }
+
+    function profileToggle() {
+        document.getElementById('ProfileDropDown').classList.toggle('hidden');
+    }
+
+    function toggleRateField() {
+        const freePaidSelect = document.getElementById('free-paid');
+        const rateField = document.getElementById('rate-field');
+        if (freePaidSelect.value === 'paid') {
+            rateField.style.display = 'block';
+        } else {
+            rateField.style.display = 'none';
+        }
+    }
+
+    document.getElementById('exp_date').addEventListener('change', function() {
+        var expDate = this.value; // This will be in YYYY-MM-DD format
+        console.log('Selected date:', expDate);
+
+        // You can further process the date as needed
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get today's date in YYYY-MM-DD format
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = today.getFullYear();
+
+        const formattedDate = yyyy + '-' + mm + '-' + dd;
+
+        // Set the min attribute for the expiry date input
+        document.getElementById('exp_date').setAttribute('min', formattedDate);
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get today's date in YYYY-MM-DD format
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = today.getFullYear();
+
+        const formattedDate = yyyy + '-' + mm + '-' + dd;
+
+        // Set the min attribute for the expiry date input
+        document.getElementById('exp_date').setAttribute('min', formattedDate);
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Other validation functions...
+
+        function validatedose() {
+            var dose = $("#dose").val();    
+            // Check if the dose is a number and within the range of 0 to 5
+            if (dose === "" || isNaN(dose) || dose < 0 || dose > 5) {
+                $("#doseError").show();
+                return false;
+            } else {
+                $("#doseError").hide();
+                return true;
+            }
+        }
+
+        // Other code...
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".error").hide();
+
+        // Validate each field
+        $("#vaccine_name").keyup(validateVaccineName);
+        $("#m_name").keyup(validateMName);
+        $("#b_no").keyup(validateBno);
+        $("#age").keyup(validateAge);
+        $("#dose").keyup(validatedose);
+        $("#indications").keyup(validateIndications);
+        $("#stockError").keyup(validatestock);
+
+        function validateVaccineName() {
+            var vaccineNameRegex = /^[A-Za-z0-9\s-\/]+$/;
+            var vaccineName = $("#vaccine_name").val().trim();
+
+            if (!vaccineNameRegex.test(vaccineName)) {
+                $("#nameError").show();
+                return false;
+            } else {
+                $("#nameError").hide();
+                return true;
+            }
+        }
+
+        function validateMName() {
+            var nameRegex = /^[A-Za-z\s-]+$/;
+            var manufacturerName = $("#m_name").val();
+            if (!nameRegex.test(manufacturerName)) {
+                $("#mError").show();
+                return false;
+            } else {
+                $("#mError").hide();
+                return true;
+            }
+        }
+
+        function validateBno() {
+            // Regex to match batch numbers that:
+            // - Must be exactly 9 characters long
+            // - Can include alphabets (both uppercase and lowercase), numbers, and exactly one hyphen
+            var bnoRegex = /^[A-Za-z0-9]{4}[A-Za-z0-9]?-?[A-Za-z0-9]{4}$/;
+            var b_no = $("#b_no").val().trim();
+        
+            // Ensure total length is 9 characters, including the hyphen if present
+            if (!bnoRegex.test(b_no) || b_no.length !== 9) {
+                $("#bError").show(); // Show error if validation fails
+                return false;
+            } else {
+                $("#bError").hide(); // Hide error if validation passes
+                return true;
+            }
+        }
+
+        
+        
+
+        function validateAge() {
+            var ageInput = $("#age").val().trim();
+            var ageRegex = /^(?:([1-9]|[1-9]\d|[1-9]\d\d)(?:-(?:[1-9]|[1-9]\d|[1-9]\d\d))?)\s*(months?|weeks?|years?)$/i;
+
+            var match = ageInput.match(ageRegex);
+            if (!match) {
+                $("#ageError").show();
+                return false;
+            }
+
+            var ageParts = ageInput.split(/\s+/);
+            var ageRange = ageParts[0].split('-');
+
+            if (ageRange.length === 2) {
+                var startAge = parseInt(ageRange[0], 10);
+                var endAge = parseInt(ageRange[1], 10);
+
+                if (startAge < 1 || endAge < 1 || startAge >= endAge || endAge > 999) {
+                    $("#ageError").show();
+                    return false;
+                }
+            } else {
+                var singleAge = parseInt(ageRange[0], 10);
+                if (singleAge < 1 || singleAge > 999) {
+                    $("#ageError").show();
+                    return false;
+                }
+            }
+
+            $("#ageError").hide();
+            return true;
+        }
+
+        function validatedose() {
+            var doseRegex = /^[1-5]$/;
+            var dose = $("#dose").val();    
+            if (!doseRegex.test(dose)) {
+                $("#doseError").show();
+                return false;
+            } else {
+                $("#doseError").hide();
+                return true;
+            }
+        }
+
+        function validatestock() {
+            var stock = $("#stock").val();    
+            // Check if the stock is a number and within the range of 0 to 100
+            if (stock === "" || isNaN(stock) || stock < 0 || stock > 100) {
+                $("#stockError").show();
+                return false;
+            } else {
+                $("#stockError").hide();
+                return true;
+            }
+        }
+
+        function validateIndications() {
+            // Regex to match:
+            // - Starts with an alphabet
+            // - Allows spaces only between words (single space)
+            // - Disallows numbers and special characters
+            // - Does not allow leading/trailing/multiple spaces
+            var indicationsRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+            var indications = $("#indications").val().trim();
+        
+            // Check the input against the regex
+            if (!indicationsRegex.test(indications)) {
+                $("#iError").show(); // Show error if validation fails
+                return false;
+            } else {
+                $("#iError").hide(); // Hide error if validation passes
+                return true;
+            }
+        }
+        
+        
+        $("#submit").click(function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var vaccine_name = validateVaccineName();
+            var m_name = validateMName();
+            var b_no = validateBno();
+            var age = validateAge();
+            var dose = validatedose();
+            var indications = validateIndications();
+            var stock = validatestock();
+
+            if (vaccine_name && m_name && b_no && age && dose && indications && stock) {
+                // Form is valid, proceed with form submission
+                $("form").submit();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null
+    };
+</script>
+</body>
+</html>
