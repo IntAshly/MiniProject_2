@@ -45,7 +45,7 @@ from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_out
 from django.dispatch import receiver
 from django.http import JsonResponse
-from app.ml_models import predict_vaccine_details  # Import the ML function
+# from app.ml_models import predict_vaccine_details  # Import the ML function
 from django.conf import settings
 import os
 from django.views.decorators.csrf import csrf_exempt
